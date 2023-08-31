@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/slides-eumas-2023/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/slides-eumas-2023/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/slides-eumas-2023/css/custom-theme.min.7dc4b37243b050f0b540daa7bb01dfe9ab5d00bfa45784c4e083839b5c9db755.css" id="theme"><link rel="stylesheet" href="/slides-eumas-2023/highlight-js/solarized-dark.min.css">
+  <link rel="stylesheet" href="/slides-eumas-2023/css/custom-theme.min.580290494f64df730a52c6e870402911c55d55a59825dc02a7b577d8b1d1903e.css" id="theme"><link rel="stylesheet" href="/slides-eumas-2023/highlight-js/solarized-dark.min.css">
 <link rel="stylesheet" href="https://gitcdn.link/repo/DanySK/css-blur-animation/master/blur.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
@@ -156,13 +156,13 @@ they do not give a rich syntax to describe entities intuitively.</p>
 <h1 id="aop-custom-languages">AOP Custom Languages</h1>
 <ul>
 <li><span class="fragment green">Great ergonomy while modelling AOP entities</span></li>
-<li><span class="fragment red">Higher learning curve</span></li>
+<li><span class="fragment red">Steeper learning curve</span></li>
 <li><span class="fragment red">Needs a continuous development to work properly</span></li>
 <li><span class="fragment red">Do not inherit the valid tooling of a mainstream language (IDEs, code suggestions, syntax highlighters, linters…)</span></li>
 <li><span class="fragment red">Do not support multi-paradigm programming, they tipycally provide only AOP abstractions</span></li>
 </ul>
 </section><section>
-<h1 id="a-middle-road-br-jakta-an-internal-dsl">A middle road: <br> JaKtA, an internal DSL</h1>
+<h1 id="a-middle-road-br-hybrid-approach">A middle road: <br> hybrid approach</h1>
 <!-- ![](images/ergonomy.png) -->
 <figure><img src="images/ergonomy.png" width="60%">
 </figure>
@@ -205,13 +205,20 @@ they do not give a rich syntax to describe entities intuitively.</p>
 </section><section>
 <h1 id="jakta-dsl">Jakta DSL</h1>
 <br>
-<div class="flex">
-<div>
-  <script type="application/javascript" src="https://gist.github.com/anitvam/2de7d5a5daef373a32e9bb8179b01590.js"></script>
-
-<div>
-</div>
-</div></div></section><section>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="nohighlight" data-noescape=""><span style="display:flex;"><span><span style="color:#000">mas</span> <span style="color:#000;font-weight:bold">{</span>                                                     <span style="color:#8f5902;font-style:italic">// BDI specification
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">fun</span> <span style="color:#000">allPlayers</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">team</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">String</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">=</span>                        <span style="color:#8f5902;font-style:italic">// Object-oriented style
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>      <span style="color:#000">Regex</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">"""&lt;span class="card-title"&gt;((\w+|\s)+)&lt;\/span&gt;"""</span><span style="color:#000;font-weight:bold">).</span><span style="color:#000">findAll</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">URL</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">"https://analytics.soccerment.com/en/team/</span><span style="color:#4e9a06">$team</span><span style="color:#4e9a06">"</span><span style="color:#000;font-weight:bold">).</span><span style="color:#000">readText</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000;font-weight:bold">).</span><span style="color:#000">map</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#204a87;font-weight:bold">it</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">groupValues</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">}</span>                         <span style="color:#8f5902;font-style:italic">// Monadic manipulation (functional)
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">listOf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">"napoli"</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">"milan"</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">"juventus"</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">.</span><span style="color:#000">flatMap</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">allPlayers</span><span style="color:#000;font-weight:bold">)</span>                            <span style="color:#8f5902;font-style:italic">// Functional style (higher-order function)
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000;font-weight:bold">.</span><span style="color:#000">forEach</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#000">agent</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">"</span><span style="color:#4e9a06">$player</span><span style="color:#4e9a06"> playing for </span><span style="color:#4e9a06">$team</span><span style="color:#4e9a06">"</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>              <span style="color:#8f5902;font-style:italic">// BDI style
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#ce5c00;font-weight:bold">..</span><span style="color:#000;font-weight:bold">.</span>                                           
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div></section><section>
 <h1 id="jakta-jvm-based">JakTa JVM based</h1>
 <br>
 <figure><img src="images/tictactoe-android.png" width="50%">
